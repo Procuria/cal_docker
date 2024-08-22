@@ -4,10 +4,6 @@ version: '3.8'
 volumes:
   database-data:
 
-networks:
-  stack:
-    name: stack
-    external: false
 
 services:
   database:
@@ -17,9 +13,7 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data/
     env_file: .env
-    networks:
-      - stack
-
+   
   calcom:
     image: calcom.docker.scarf.sh/calcom/cal.com
     build:
@@ -36,8 +30,7 @@ services:
         DATABASE_DIRECT_URL: ${DATABASE_URL}
       network: stack
     restart: always
-    networks:
-      - stack
+   
     ports:
       - 3000:3000
     env_file: .env
@@ -51,8 +44,7 @@ services:
   studio:
     image: calcom.docker.scarf.sh/calcom/cal.com
     restart: always
-    networks:
-      - stack
+    
     ports:
       - 5555:5555
     env_file: .env
